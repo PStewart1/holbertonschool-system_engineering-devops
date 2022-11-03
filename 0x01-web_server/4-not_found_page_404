@@ -16,5 +16,4 @@ echo "" >> /home/ubuntu/custom_404.html
 pound="#"
 error="error_page 404 /custom_404.html;"
 sed -i "56 s+$pound+$error+" /etc/nginx/sites-enabled/default
-nginx -s restart
 nginx -s reload
