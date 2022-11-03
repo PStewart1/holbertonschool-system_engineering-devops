@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # installs nginx and changes default html to return "Hello World!"
 apt install nginx -y
-sudo chmod a+w /var/www/html/index.nginx-debian.html 
+chmod a+w /var/www/html/index.nginx-debian.html 
 echo "Hello World!" > /var/www/html/index.nginx-debian.html 
-sudo nginx -s reload
+nginx -s reload
