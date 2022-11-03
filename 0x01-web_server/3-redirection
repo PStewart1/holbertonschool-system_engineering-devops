@@ -7,6 +7,6 @@ old_root="root /var/www/html;"
 new_root="# root /var/www/html;\n\troot /home/ubuntu;"
 sed -i "s+$old_root+$new_root+" /etc/nginx/sites-enabled/default 
 comment="# pass PHP scripts to FastCGI server"
-redirect="rewrite ^/redirect_me$ https://www.youtube.com/watch?v=k1BneeJTDcU permanent;"
+redirect="rewrite ^/redirect_me$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;"
 sed -i "s+$comment+$redirect+" /etc/nginx/sites-enabled/default 
 nginx -s reload
