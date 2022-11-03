@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# installs nginx and changes default html, and redirects "
+# installs nginx, changes default html, redirects, and adds custom error page
 apt install nginx -y
 echo "Hello World!" > /home/ubuntu/index.html
 chmod a+w /etc/nginx/sites-enabled/default
@@ -9,4 +9,9 @@ sed -i "s+$old_root+$new_root+" /etc/nginx/sites-enabled/default
 comment="# pass PHP scripts to FastCGI server"
 redirect="rewrite ^/redirect_me$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;"
 sed -i "s+$comment+$redirect+" /etc/nginx/sites-enabled/default 
+echo "Ceci n'est pas une page" > /home/ubuntu/custom_404.html
+echo "" >> /home/ubuntu/custom_404.html
+pound="#"
+error="error_page 404 /custom_404.html;"
+sed -i "56 s+$pound+$error+" /etc/nginx/sites-enabled/default
 nginx -s reload
