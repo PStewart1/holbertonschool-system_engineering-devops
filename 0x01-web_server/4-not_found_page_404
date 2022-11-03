@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # installs nginx, changes default html, redirects, and adds custom error page
-apt install nginx -y
+apt-get -y update
+apt-get -y upgrade
+apt-get -y install nginx
 echo "Hello World!" > /home/ubuntu/index.html
 chmod a+w /etc/nginx/sites-enabled/default
 old_root="root /var/www/html;"
@@ -14,4 +16,5 @@ echo "" >> /home/ubuntu/custom_404.html
 pound="#"
 error="error_page 404 /custom_404.html;"
 sed -i "56 s+$pound+$error+" /etc/nginx/sites-enabled/default
+nginx -s restart
 nginx -s reload
