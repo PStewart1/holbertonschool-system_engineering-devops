@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# installs nginx and changes default html, and redirects "
+apt install nginx -y
+
+chmod a+w /etc/nginx/sites-enabled/default
+old_root="root /var/www/html;"
+new_root="# root /var/www/html;\n\troot ~/;"
+sed -i "s+$old_root+$new_root+" /etc/nginx/sites-enabled/default 
+comment="# pass PHP scripts to FastCGI server"
+redirect="rewrite ^/redirect_me$ https://www.youtube.com/watch?v=k1BneeJTDcU permanent;"
+sed -i "s+$comment+$redirect+" /etc/nginx/sites-enabled/default 
+
+nginx -s reload
