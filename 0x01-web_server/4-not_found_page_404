@@ -7,7 +7,6 @@ comment="# pass PHP scripts to FastCGI server"
 redirect="location /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=k1BneeJTDcU;\n\t}"
 sudo sed -i "s+$comment+$redirect+" /etc/nginx/sites-enabled/default 
 sudo echo "Ceci n'est pas une page" | sudo tee /var/www/html/custom_404.html
-# sudo echo "" >> /usr/share/nginx/html/custom_404.html
 pound="#"
 error="error_page 404 /custom_404.html;"
 sudo sed -i "57 s+$pound+$error+" /etc/nginx/sites-enabled/default
