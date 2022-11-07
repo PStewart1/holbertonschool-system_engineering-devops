@@ -10,13 +10,13 @@ echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
 echo "
 frontend haproxy-main
     bind *:80
-    option forwardfor  
-    default_backend apache_webservers" | sudo tee -a /etc/haproxy/haproxy.cfg
+    mode http
+    default_backend webservers" | sudo tee -a /etc/haproxy/haproxy.cfg
 
-echo "
-backend apache_webservers
-    balance roundrobin    
-    server websvr1  54.234.160.185:80 check
-    server websvr2  3.91.201.90:80 check" | sudo tee -a /etc/haproxy/haproxy.cfg
+echo "backend webservers
+    balance roundrobin
+    option forwardfor
+    server 4920-web-01  54.234.160.185:80 check
+    server 4920-web-02  3.91.201.90:80 check" | sudo tee -a /etc/haproxy/haproxy.cfg
 
 sudo service haproxy restart

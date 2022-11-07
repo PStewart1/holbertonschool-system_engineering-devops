@@ -18,4 +18,3 @@ header=";\n\tadd_header X-Served-By \$hostname;\n"
 sudo sed -i "57 s+$line+$header+" /etc/nginx/sites-enabled/default
 
 sudo service nginx restart
-
