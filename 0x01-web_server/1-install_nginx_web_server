@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 # installs nginx and changes default html to return "Hello World!"
-apt install nginx -y
-echo "Hello World!" > /home/ubuntu/index.html
-chmod a+w /etc/nginx/sites-enabled/default
-old_root="root /var/www/html;"
-new_root="# root /var/www/html;\n\troot /home/ubuntu;"
-sed -i "s+$old_root+$new_root+" /etc/nginx/sites-enabled/default
-nginx -s reload
+sudo apt-get -y update -y
+sudo apt-get -y install nginx
+sudo echo "Hello World!" | sudo tee /home/ubuntu/index.nginx-debian.html
+sudo service nginx restart

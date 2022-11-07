@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 # installs nginx, changes default html, redirects, and adds custom error page
-apt-get -y update
-apt-get -y upgrade
-apt-get -y install nginx
+sudo apt-get -y update
+sudo apt-get -y install nginx
 echo "Hello World!" > /home/ubuntu/index.html
 chmod a+w /etc/nginx/sites-enabled/default
 old_root="root /var/www/html;"
