@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
 # installs nginx, changes default html, redirects, and adds custom error page
-sudo apt-get -y update
-sudo apt-get -y install nginx
-echo "Hello World!" > /home/ubuntu/index.html
-chmod a+w /etc/nginx/sites-enabled/default
-old_root="root /var/www/html;"
-new_root="# root /var/www/html;\n\troot /home/ubuntu;"
-sed -i "s+$old_root+$new_root+" /etc/nginx/sites-enabled/default 
+sudo apt-get update -y
+sudo apt-get install nginx -y
+sudo echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
 comment="# pass PHP scripts to FastCGI server"
-redirect="rewrite ^/redirect_me$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;"
-sed -i "s+$comment+$redirect+" /etc/nginx/sites-enabled/default 
-echo "Ceci n'est pas une page" > /home/ubuntu/custom_404.html
-echo "" >> /home/ubuntu/custom_404.html
+redirect="location /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=k1BneeJTDcU;\n\t}"
+sudo sed -i "s+$comment+$redirect+" /etc/nginx/sites-enabled/default 
+sudo echo "Ceci n'est pas une page" | sudo tee /var/www/html/custom_404.html
+# sudo echo "" >> /usr/share/nginx/html/custom_404.html
 pound="#"
 error="error_page 404 /custom_404.html;"
-sed -i "56 s+$pound+$error+" /etc/nginx/sites-enabled/default
-nginx -s reload
+sudo sed -i "57 s+$pound+$error+" /etc/nginx/sites-enabled/default
+sudo service nginx restart
