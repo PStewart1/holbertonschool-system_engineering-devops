@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# installs nginx and changes default html, and redirects "
+# installs nginx and changes default html, and redirects 
 sudo apt-get update -y
 sudo apt-get install nginx -y
 sudo echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
 sudo chmod a+w /etc/nginx/sites-enabled/default
 comment="# pass PHP scripts to FastCGI server"
-redirect="rewrite ^/redirect_me$ https://www.youtube.com/watch?v=k1BneeJTDcU permanent;"
+redirect="location /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=k1BneeJTDcU;\n\t}"
 sudo sed -i "s+$comment+$redirect+" /etc/nginx/sites-enabled/default 
 sudo service nginx restart
