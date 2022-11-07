@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Install and configure HAproxy
+sudo apt-get update -y
+sudo apt-get install --no-install-recommends software-properties-common -y
+sudo add-apt-repository ppa:vbernat/haproxy-2.6 -y
+sudo apt-get install haproxy=2.6.\* -y
+
+echo "
+frontend haproxy-main
+    bind *:80
+    option forwardfor  
+    default_backend apache_webservers" | sudo tee -a /etc/haproxy/haproxy.cfg
+
+echo "
+backend apache_webservers
+    balance roundrobin    
+    server websvr1  54.234.160.185:80 check
+    server websvr2  3.91.201.90:80 check" | sudo tee -a /etc/haproxy/haproxy.cfg
+
+sudo systemctl restart haproxy
