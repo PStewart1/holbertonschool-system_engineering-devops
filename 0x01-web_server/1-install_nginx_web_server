@@ -2,5 +2,5 @@
 # installs nginx and changes default html to return "Hello World!"
 sudo apt-get update -y
 sudo apt-get install nginx -y
-sudo echo "Hello World!" | sudo tee /home/ubuntu/index.nginx-debian.html
+sudo echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
 sudo service nginx restart
