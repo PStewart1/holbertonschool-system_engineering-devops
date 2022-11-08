@@ -4,17 +4,17 @@ sudo apt-get update -y
 sudo apt-get install nginx -y
 echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
 
-comment="# pass PHP scripts to FastCGI server"
-redirect="location /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=k1BneeJTDcU;\n\t}"
-sudo sed -i "s+$comment+$redirect+" /etc/nginx/sites-enabled/default 
+comment="}"
+redirect="}\n\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=k1BneeJTDcU;\n\t}"
+sudo sed -i "52 s+$comment+$redirect+" /etc/nginx/sites-available/default 
 
 echo "Ceci n'est pas une page" | sudo tee /var/www/html/custom_404.html
-pound="#"
-error="error_page 404 /custom_404.html;"
-sudo sed -i "57 s+$pound+$error+" /etc/nginx/sites-enabled/default
+pound="}"
+error="}\n\terror_page 404 /custom_404.html;"
+sudo sed -i "56 s+$pound+$error+" /etc/nginx/sites-available/default
 
 line=";"
-header=";\n\tadd_header X-Served-By "$HOSTNAME";\n"
-sudo sed -i "57 s+$line+$header+" /etc/nginx/sites-enabled/default
+header=";\n\tadd_header X-Served-By \$hostname;"
+sudo sed -i "57 s+$line+$header+" /etc/nginx/sites-available/default
 
 sudo service nginx restart
