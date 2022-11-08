@@ -5,16 +5,8 @@ sudo apt-get install haproxy -y
 
 echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
 
-echo "
-frontend main
-    bind *:80
-    mode http
-    default_backend web_servers" | sudo tee -a /etc/haproxy/haproxy.cfg
-
-echo "backend web_servers
-    balance roundrobin
-    option forwardfor
-    server 4920-web-01 54.234.160.185:80 check
-    server 4920-web-02 3.91.201.90:80 check" | sudo tee -a /etc/haproxy/haproxy.cfg
+frontend="\nfrontend main\n\tbind *:80\n\tmode http\n\tdefault_backend web_servers"
+backend="\nbackend web_servers\n\tbalance roundrobin\n\toption forwardfor\n\tserver 4920-web-01 54.234.160.185:80 check\n\tserver 4920-web-02 3.91.201.90:80 check"
+echo -e "$frontend""$backend" | sudo tee -a /etc/haproxy/haproxy.cfg
 
 sudo service haproxy restart
