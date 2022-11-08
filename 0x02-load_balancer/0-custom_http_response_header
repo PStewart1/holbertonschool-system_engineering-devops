@@ -2,19 +2,19 @@
 # installs nginx, changes default html, redirects, adds custom error page and response header
 sudo apt-get update -y
 sudo apt-get install nginx -y
-sudo echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
 
 comment="# pass PHP scripts to FastCGI server"
 redirect="location /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=k1BneeJTDcU;\n\t}"
 sudo sed -i "s+$comment+$redirect+" /etc/nginx/sites-enabled/default 
 
-sudo echo "Ceci n'est pas une page" | sudo tee /var/www/html/custom_404.html
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/custom_404.html
 pound="#"
 error="error_page 404 /custom_404.html;"
 sudo sed -i "57 s+$pound+$error+" /etc/nginx/sites-enabled/default
 
 line=";"
-header=";\n\tadd_header X-Served-By \$HOSTNAME;\n"
+header=";\n\tadd_header X-Served-By "$HOSTNAME";\n"
 sudo sed -i "57 s+$line+$header+" /etc/nginx/sites-enabled/default
 
 sudo service nginx restart
