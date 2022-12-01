@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 """script uses a public api, returns information
 about todo list progressfor all users. """
-import requests
-import sys
 import json
+import requests
 
 
 if __name__ == "__main__":

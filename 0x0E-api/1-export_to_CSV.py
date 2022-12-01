@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """script uses a public api, for a given employee ID,
 dumps todo info into csv file """
+import csv
 import requests
 import sys
-import csv
 
 
 if __name__ == "__main__":
@@ -16,13 +16,11 @@ if __name__ == "__main__":
         "https://jsonplaceholder.typicode.com/users/" + eid + "/todos").json()
     todos = []
     total = len(response)
-    done = 0
     todos_csv = []
     for v in response:
         todo = [eid, username, v.get("completed"), v.get("title")]
         todos_csv.append(todo)
         if v.get("completed") is True:
-            done += 1
             todos.append(v.get("title"))
     print("Employee {} is done with tasks({}/{}):".format(name, done, total))
     for i in todos:

@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """script uses a public api, for a given employee ID,
 dumps todo info into csv file """
+import json
 import requests
 import sys
-import json
 
 
 if __name__ == "__main__":
