@@ -3,7 +3,7 @@
 dumps todo info into csv file """
 import requests
 import sys
-import csv
+import json
 
 
 if __name__ == "__main__":
@@ -13,11 +13,12 @@ if __name__ == "__main__":
     name = name_response['username']
     response = requests.get(
         "https://jsonplaceholder.typicode.com/users/" + eid + "/todos").json()
+    todo_dic = {}
     todos = []
     for v in response:
-        todo = [eid, name, v['completed'], v['title']]
+        todo = {"task": v['title'], "completed": v['completed'], "username": name}
         todos.append(todo)
-    file = eid + ".csv"
-    with open(file, 'w', newline='') as csvfile:
-        my_writer = csv.writer(csvfile, quoting=1)
-        my_writer.writerows(todos)
+    todo_dic.update({2: todos})
+    file = eid + ".json"
+    with open(file, 'w', newline='') as f:
+        json.dump(todo_dic, f)
