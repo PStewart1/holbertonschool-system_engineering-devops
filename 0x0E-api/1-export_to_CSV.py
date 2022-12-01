@@ -10,7 +10,8 @@ if __name__ == "__main__":
     eid = sys.argv[1]
     name_response = requests.get(
         "https://jsonplaceholder.typicode.com/users/" + eid).json()
-    name = name_response.get("username")
+    username = name_response.get("username")
+    name = name_response.get("name")
     response = requests.get(
         "https://jsonplaceholder.typicode.com/users/" + eid + "/todos").json()
     todos = []
@@ -18,7 +19,7 @@ if __name__ == "__main__":
     done = 0
     todos_csv = []
     for v in response:
-        todo = [eid, name, v.get("completed"), v.get("title")]
+        todo = [eid, username, v.get("completed"), v.get("title")]
         todos_csv.append(todo)
         if v.get("completed") is True:
             done += 1
