@@ -18,6 +18,6 @@ if __name__ == "__main__":
         todo = [eid, name, v['completed'], v['title']]
         todos.append(todo)
     file = eid + ".csv"
-    with open (file,'w',newline = '') as csvfile:
-        my_writer = csv.writer(csvfile, quoting=1)   
+    with open(file, 'w', newline='') as csvfile:
+        my_writer = csv.writer(csvfile, quoting=1)
         my_writer.writerows(todos)
