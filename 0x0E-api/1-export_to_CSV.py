@@ -19,5 +19,5 @@ if __name__ == "__main__":
         todos.append(todo)
     file = eid + ".csv"
     with open (file,'w',newline = '') as csvfile:
-        my_writer = csv.writer(csvfile)   
+        my_writer = csv.writer(csvfile, quoting=1)   
         my_writer.writerows(todos)
