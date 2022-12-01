@@ -11,7 +11,7 @@ if __name__ == "__main__":
     name_response = requests.get(
         "https://jsonplaceholder.typicode.com/users/" + eid).json()
     name = name_response.get("name")
-    username = name_response['username']
+    username = name_response.get('username')
     response = requests.get(
         "https://jsonplaceholder.typicode.com/users/" + eid + "/todos").json()
     todo_dic = {}
@@ -20,7 +20,7 @@ if __name__ == "__main__":
     total = len(response)
     done = 0
     for v in response:
-        todo = {"task": v['title'], "completed": v['completed'],
+        todo = {"task": v.get('title'), "completed": v.get('completed'),
                 "username": username}
         todos.append(todo)
         if v.get("completed") is True:
@@ -32,5 +32,5 @@ if __name__ == "__main__":
     todo_dic.update({2: todos})
 
     file = eid + ".json"
-    with open(file, 'w') as f:
+    with open(file, 'w', newline='') as f:
         json.dump(todo_dic, f)
