@@ -1,36 +1,48 @@
 #!/usr/bin/python3
 """script uses a public api, for a given employee ID,
 dumps todo info into csv file """
-import requests
-import sys
-import json
 
 
-if __name__ == "__main__":
-    eid = sys.argv[1]
-    name_response = requests.get(
-        "https://jsonplaceholder.typicode.com/users/" + eid).json()
-    name = name_response.get("name")
-    username = name_response.get('username')
-    response = requests.get(
-        "https://jsonplaceholder.typicode.com/users/" + eid + "/todos").json()
-    todo_dic = {}
-    titles = []
-    todos = []
-    total = len(response)
-    done = 0
-    for v in response:
-        todo = {"task": v.get('title'), "completed": v.get('completed'),
-                "username": username}
-        todos.append(todo)
-        if v.get("completed") is True:
-            done += 1
-            titles.append(v.get("title"))
-    print("Employee {} is done with tasks({}/{}):".format(name, done, total))
-    for i in titles:
-        print("\t {}".format(i))
-    todo_dic.update({2: todos})
+def get_json():
+    import csv
+    import json
+    import requests
+    from sys import argv
+    id = argv[1]
+    user = requests.get("https://jsonplaceholder.typicode.com/users/{}".
+                        format(id)).json()
 
-    file = eid + ".json"
-    with open(file, 'w', newline='') as f:
-        json.dump(todo_dic, f)
+    toDo = requests.get("https://jsonplaceholder.typicode.com/todos?userId={}".
+                        format(id)).json()
+
+    completedTask = []
+
+    for task in toDo:
+        if task.get("completed") is True:
+            completedTask.append(task.get("title"))
+    print("Employee {} is done with tasks({}/{}):"
+          .format(user.get('name'), len(completedTask), len(toDo)))
+    for task in completedTask:
+        print("\t {}".format(task))
+
+    with open("{}.csv".format(id), "w", newline="") as csvFile:
+        writer = csv.writer(csvFile, quoting=csv.QUOTE_ALL)
+        for task in toDo:
+            writer.writerow([int(id), user.get("username"),
+                            task.get("completed"), task.get("title")])
+
+    jsonTask = []
+    for task in toDo:
+        task_dict = {}
+        task_dict["task"] = task.get('title')
+        task_dict["completed"] = task.get("completed")
+        task_dict["username"] = user.get("username")
+        jsonTask.append(task_dict)
+    json_dict = {}
+    json_dict[id] = jsonTask
+    with open("{}.json".format(id), "w") as file:
+        json.dump(json_dict, file)
+
+
+if __name__ == '__main__':
+    get_json()
