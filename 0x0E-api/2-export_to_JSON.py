@@ -16,9 +16,10 @@ if __name__ == "__main__":
     todo_dic = {}
     todos = []
     for v in response:
-        todo = {"task": v['title'], "completed": v['completed'], "username": name}
+        todo = {"task": v['title'], "completed": v['completed'],
+                "username": name}
         todos.append(todo)
     todo_dic.update({2: todos})
     file = eid + ".json"
-    with open(file, 'w', newline='') as f:
+    with open(file, 'w') as f:
         json.dump(todo_dic, f)
