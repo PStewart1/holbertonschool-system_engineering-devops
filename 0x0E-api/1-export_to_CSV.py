@@ -22,7 +22,8 @@ if __name__ == "__main__":
         todos_csv.append(todo)
         if v.get("completed") is True:
             todos.append(v.get("title"))
-    print("Employee {} is done with tasks({}/{}):".format(name, len(todos), total))
+    print("Employee {} is done with tasks({}/{}):"
+          .format(name, len(todos), total))
     for i in todos:
         print("\t {}".format(i))
 
