@@ -16,7 +16,10 @@ if __name__ == "__main__":
     todos = []
     total = len(response)
     done = 0
+    todos_csv = []
     for v in response:
+        todo = [eid, name, v.get("completed"), v.get("title")]
+        todos_csv.append(todo)
         if v.get("completed") is True:
             done += 1
             todos.append(v.get("title"))
@@ -24,11 +27,7 @@ if __name__ == "__main__":
     for i in todos:
         print("\t {}".format(i))
 
-    todos_csv = []
-    for v in response:
-        todo = [eid, name, v.get("completed"), v.get("title")]
-        todos_csv.append(todo)
     file = eid + ".csv"
     with open(file, 'w', newline='') as csvfile:
         my_writer = csv.writer(csvfile, quoting=1)
-        my_writer.writerows(todos)
+        my_writer.writerows(todos_csv)
