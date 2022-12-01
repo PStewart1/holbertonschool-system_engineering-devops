@@ -15,7 +15,7 @@ if __name__ == "__main__":
         "https://jsonplaceholder.typicode.com/users/" + eid + "/todos").json()
     todos = []
     for v in response:
-        todo = [eid, name, v['completed'], v['title']]
+        todo = [eid, name, v.get('completed'), v.get('title')]
         todos.append(todo)
     file = eid + ".csv"
     with open(file, 'w', newline='') as csvfile:
