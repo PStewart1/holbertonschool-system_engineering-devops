@@ -10,7 +10,7 @@ if __name__ == "__main__":
     eid = sys.argv[1]
     name_response = requests.get(
         "https://jsonplaceholder.typicode.com/users/" + eid).json()
-    name = name_response['username']
+    name = name_response.get('username')
     response = requests.get(
         "https://jsonplaceholder.typicode.com/users/" + eid + "/todos").json()
     todos = []
